@@ -1,0 +1,111 @@
+----------------------------------
+Author: Laura Forbes (Github: lforbes)
+Copyright: Laura Forbes
+Date: 19th January 2020
+Version: 1.0.1
+----------------------------------
+
+=========================================
+0. PURPOSE OF THE PYTHON SCRIPT
+=========================================
+This script - pet_swagger.py - its used to perform operations in the Swagger Petstore database (https://petstore.swagger.io/).
+The operations that this script can perform are:
+- Create: Add a new entry to Petstore database. For this option, information about the pet being added must be given in JSON format. Details of this JSON format are described below in Section 3.
+
+- Update: Modify the details of an existing entry in the Petstore database. For this option, information about the pet being updated must be given in JSON format. Details of this JSON format are described below in Section 3.
+
+- Delete: Remove an entry in the Petstore database. A pet ID must be provided for this operation, either on it's own or within a JSON object, as described in Section 3.
+
+- Info: Retrieve an entry in the Petstore database. A pet ID must be provided for this operation, either on it's own or within a JSON object, as described in Section 3.
+
+Verifications are made after each create, update and delete operation to ensure that the operation was successful.
+
+=========================================
+1. FILES ACCOMPANYING THIS README
+=========================================
+The following files should accompany this README:
+- pet_swagger.py : The script that performs the operations as described in Section 0 above.
+- example_pet_create.json : A JSON file with a test pet to create.
+- example_pet_update.json : A JSON file with modifications to the above test file.
+- template_pet.json : A JSON Pet Swagger template. Copy this file and make the necessary changes to the copied file to use for creating/updating a pet entry in the Petstore database.
+
+=========================================
+2. COMMAND LINE OPTIONS
+=========================================
+This script can be run with the following options:
+- No options: Running the script without passing in any arguments will execute the create, update and delete operations on an example pet object defined within the script.
+	Ex. python pet_swagger.py
+
+- Log to file: Passing in this argument will redirect the console output to a timestamped text file.
+	Format: -lf / --log_file
+	Ex. python pet_swagger.py --log_file
+	Ex. python pet_swagger.py -lf
+
+- Database action: Use this argument to specify the operation that is to be performed on the Petstore database entry. The available operations are listed in Section 0 above.
+	Format: -da / --db_action
+	Ex. python pet_swagger.py --db_action create --input_file /home/Laura/pet_123.json
+	Ex. python pet_swagger.py -da update -if /home/Laura/pet_123_updated.json
+	Ex. python pet_swagger.py -da info --pet_id 123
+	Ex. python pet_swagger.py -da delete -pi 123
+
+- Input file: JSON file containing the Petstore entry to be created, updated or deleted. The necessary format of this JSON file is described in Section 3 below.
+	Format: -if / --input_file
+	Ex. python pet_swagger.py --input_file /home/Laura/pet_123.json --db_action create
+	Ex. python pet_swagger.py -da update -if /home/Laura/pet_123_updated.json
+
+- Pet ID: Pass in the ID of a pet (instead of a JSON file). This argument cannot be used when creating or updating a database entry; in these cases, an input file must be supplied as defined above.
+	Ex. -pi / --pet_id
+	Ex. python pet_swagger.py -da info --pet_id 123
+	Ex. python pet_swagger.py -pi 123 -da delete
+
+=========================================
+3. FORMAT OF JSON FILE
+=========================================
+The JSON file must have the following keys (note the nested keys):
+{
+  "category": {
+    "id": <INT>,
+    "name": "<STRING>"
+  },
+  "status": "<STRING>",
+  "name": "<STRING>",
+  "tags": [
+    {
+      "id": <INT>,
+      "name": "<STRING>"
+    }
+  ],
+  "photoUrls": [
+    "<STRING>"
+  ],
+  "id": <INT>
+}
+
+Each file must only have 1 JSON object; i.e. more than 1 pet entry is not allowed in a file.
+Example files accompany this README, as described in Section 1 above.
+
+=========================================
+4. RUNNING THIS SCRIPT USING THE EXAMPLES
+=========================================
+To see examples of this script running, you can try the below:
+- python pet_swagger.py
+	This will perform the create, update and delete operations on an example pet defined in the Python script.
+
+- python pet_swagger.py -lf
+	This will do exactly the same as the above, except that the console output will be written to a file.
+
+- Example files:
+	python pet_swagger.py -da create -if <PATH_TO_CURRENT_DIRECTORY>/example_pet_create.json
+	python pet_swagger.py -da create -if /home/Laura/example_pet_create.json
+		This will create the example pet as defined in example_pet_create.json
+		
+	python pet_swagger.py --db_action update --input_file <PATH_TO_CURRENT_DIRECTORY>/example_pet_update.json
+		This will update the previously created database entry
+	
+	python pet_swagger.py --db_action info --pet_id <'id' IN example_pet_update.json>
+	python pet_swagger.py --db_action info --pet_id 9574223
+		Pass in the 'id' as defined in example_pet_update.json to retrieve the database entry
+	
+	python pet_swagger.py -da delete -pi example_pet_create.json
+		This will delete the database entry with the 'id' defined in example_pet_create.json
+

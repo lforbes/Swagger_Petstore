@@ -1,0 +1,18 @@
+{
+  "category": {
+    "id": 0, 
+    "name": "dog"
+  }, 
+  "status": "availableForAdoption", 
+  "name": "Frodo", 
+  "tags": [
+    {
+      "id": 0, 
+      "name": "Frodo_9574223"
+    }
+  ], 
+  "photoUrls": [
+    "https://www.petfoodindustry.com/ext/resources/Images-by-month-year/18_08/dog-business-office-computer.jpg"
+  ], 
+  "id": 9574223
+}
